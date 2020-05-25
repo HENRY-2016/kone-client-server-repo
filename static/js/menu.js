@@ -1,5 +1,5 @@
 var src_url = "http://192.168.43.140:6060/";
-// var src_url = "http://172.105.158.108:6060/";
+// var src_url = "http://127.0.0.1:6060/";
 
 
 function GetAvenuePrices ( html_id, endpoint)
