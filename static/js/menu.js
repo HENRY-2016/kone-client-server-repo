@@ -1,5 +1,5 @@
-var src_url = "http://192.168.43.140:6060/";
-// var src_url = "http://127.0.0.1:6060/";
+// var src_url = "http://192.168.43.140:6060/";
+var src_url = "http://127.0.0.1:6060/";
 
 
 function GetAvenuePrices ( html_id, endpoint)
@@ -100,3 +100,82 @@ function Load_food_menu ()
     let food_names = document.getElementById('food_options');
     food_names_req.send(food_names);
 }
+
+function SubmitAjaxCustomerOrder (ordertype)
+{
+    $.ajax({
+
+        data :
+            {
+                name:$("#name").val(),
+                avenu:$("#avenu").val(),
+                location:$("#location").val(),
+                contacts:$("#contacts").val(),
+                price:$("#price-input").val(),
+                email:$("#email").val(),
+            },
+            url : src_url + "process_customer_order"+"/"+ordertype,
+            type : "POST",
+            encode : true
+    })
+    .done(function (data){
+        stringtoobject = JSON.parse(data);
+        respons_text = stringtoobject.success
+        respons_string = respons_text;
+            
+        if(data.error)
+        {
+            $('#error-post-alert').text(data.error).show();
+            $('#success-post-alert').hide();
+        }
+        else 
+        {
+            
+            $('#success-post-alert').text(respons_string).show();
+            success = '<center>'+name + '<br>'+'<br>'+'Success : Your Posted Well' +'<center>';
+            // $('#success-post-alert').text( success).show();
+            $('#error-post-alert').hide();    
+        }
+    });
+}
+
+
+function SubmitLocalDishAjaxCustomerOrder (ordertype)
+{
+    $.ajax({
+
+        data :
+            {
+                name:$("#name").val(),
+                food:$("$food").val,
+                avenu:$("#avenu").val(),
+                location:$("#location").val(),
+                contacts:$("#contacts").val(),
+                price:$("#price-input").val(),
+                email:$("#email").val(),
+            },
+            url : src_url + "process_customer_order"+"/"+ordertype,
+            type : "POST",
+            encode : true
+    })
+    .done(function (data){
+        if(data.error)
+        {
+            $('#error-post-alert').text(data.error).show();
+            $('#success-post-alert').hide();
+        }
+        else 
+        {
+            $('#success-post-alert').text(data.success).show();
+            success = '<center>'+name + '<br>'+'<br>'+'Success : Your Posted Well' +'<center>';
+            // $('#success-post-alert').text( success).show();
+            $('#error-post-alert').hide();    
+        }
+    });
+}
+
+// // console.log(data)
+// data = {"success": "Data Posted Well"}
+// // pas = JSON.parse(data1);
+// console.log(data.success);
+
